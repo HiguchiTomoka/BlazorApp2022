@@ -1,0 +1,57 @@
+﻿@page "/products"
+@inject CartService Cart
+@rendermode InteractiveServer
+@using BlazorAppDemo2022.Components.Service
+@using BlazorAppDemo2022.Components.Model
+
+<h3>商品一覧</h3>
+
+<p>カート内商品数：@Cart.Items.Count</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>商品名</th>
+            <th>価格</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Products)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Price 円</td>
+                <td>
+                    <button @onclick="() => AddToCart(product)">
+                        カートに追加
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<Product> Products = new();
+
+protected override void OnInitialized()
+    {
+        // ▼ ダミーデータ100件（負荷ポイント）
+        for (int i = 1; i <= 100; i++)
+        {
+            Products.Add(new Product
+            {
+                Id = i,
+                Name = $"商品{i}",
+                Price = i * 100
+            });
+        }
+    }
+
+    private void AddToCart(Product product)
+    {
+        Cart.Add(product);
+    }
+
+}
