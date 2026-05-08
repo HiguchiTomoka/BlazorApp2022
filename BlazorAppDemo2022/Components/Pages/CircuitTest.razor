@@ -1,0 +1,24 @@
+﻿@page "/circuit-test"
+@rendermode InteractiveServer
+
+<h3>Delayed Commit Test</h3>
+
+<input @oninput="OnInput" value="@Buffer" />
+<button @onclick="Commit">確定</button>
+
+<p>確定済み(State): @Committed</p>
+
+@code {
+    private string Buffer = "";
+    private string Committed = "";
+
+    void OnInput(ChangeEventArgs e)
+    {
+        Buffer = e.Value?.ToString() ?? "";
+    }
+
+    void Commit()
+    {
+        Committed = Buffer;
+    }
+}
